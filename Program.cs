@@ -11,6 +11,7 @@ namespace discord_bot
         private CommandHandler commandHandler = new CommandHandler(_client , new Discord.Commands.CommandService());
         private UserStatus botStatus = UserStatus.DoNotDisturb;
         private string botPlayingStatus = "Cei ce vom izbandi, din incercarea aceasta....vom iesi mai puternici.....";
+        public static ulong ownerID = 209173187345383425;
 
         public static void Main(string[] args)
             => new Program().MainAsync().GetAwaiter().GetResult();

@@ -35,7 +35,7 @@ namespace discord_bot
 
             int argPos = 0;
 
-            if (!(message.HasStringPrefix(prefix, ref argPos) ||
+            if (!(message.HasStringPrefix(prefix, ref argPos , StringComparison.OrdinalIgnoreCase) ||
                 message.HasMentionPrefix(_client.CurrentUser, ref argPos)) ||
                 message.Author.IsBot)
                 return;
