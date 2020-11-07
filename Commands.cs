@@ -1,11 +1,9 @@
 ﻿using Discord;
-using Discord.Audio;
 using Discord.Commands;
 using Discord.WebSocket;
-using Discord.Rest;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace discord_bot
@@ -47,7 +45,13 @@ namespace discord_bot
                 "\n Spune (mesaj) " +
                 "\n Random Kick " +
                 "\n Random Ban " +
-                "\n Cafea");
+                "\n Server");
+        }
+
+        [Command("server")]
+        public async Task GetGuildCount()
+        {
+            await Context.Channel.SendMessageAsync(">>> Sunt in " + Program._client.Guilds.Count + " servere");
         }
         #endregion
 
@@ -105,40 +109,17 @@ namespace discord_bot
         }
         #endregion
 
-        #region Voice
-        [Command("cafea", RunMode = RunMode.Async)]
-        public async Task JoinChannel(IVoiceChannel channel = null)
+        #region Images
+        [Command("gabor")]
+        public async Task SendImageGabor()
         {
-            channel = channel ?? (Context.User as IGuildUser)?.VoiceChannel;
-            if (channel == null) { await Context.Channel.SendMessageAsync("User must be in a voice channel, or a voice channel must be passed as an argument."); return; }
-            await Context.Message.DeleteAsync();
-
-            var audioClient = await channel.ConnectAsync();
+            string path = Program.imagePath + "\\gabor";
+            string[] images = Directory.GetFiles(path);
+            await Context.Channel.SendMessageAsync(">>> Caut imagine cu gabor");
+            await Task.Delay(2000);
+            await Context.Channel.SendFileAsync(images[rng.Next(0, images.Length)]);
         }
 
-        private Process CreateStream(string path)
-        {
-            return Process.Start(new ProcessStartInfo
-            {
-                FileName = "ffmpeg",
-                Arguments = $"-hide_banner -loglevel panic -i \"{path}\" -ac 2 -f s16le -ar 48000 pipe:1",
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-            });
-        }
-
-
-        private async Task SendAsync(IAudioClient client, string path)
-        {
-            // Create FFmpeg using the previous example
-            using (var ffmpeg = CreateStream(path))
-            using (var output = ffmpeg.StandardOutput.BaseStream)
-            using (var discord = client.CreatePCMStream(AudioApplication.Mixed))
-            {
-                try { await output.CopyToAsync(discord); }
-                finally { await discord.FlushAsync(); }
-            }
-        }
         #endregion
     }
 }

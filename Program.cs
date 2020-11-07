@@ -12,6 +12,7 @@ namespace discord_bot
         private UserStatus botStatus = UserStatus.DoNotDisturb;
         private string botPlayingStatus = "Cei ce vom izbandi, din incercarea aceasta....vom iesi mai puternici.....";
         public static ulong ownerID = 209173187345383425;
+        public static string imagePath = "D:\\github\\discord-bot\\discord-bot\\images";
 
         public static void Main(string[] args)
             => new Program().MainAsync().GetAwaiter().GetResult();
