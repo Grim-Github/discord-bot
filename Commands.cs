@@ -44,8 +44,8 @@ namespace discord_bot
             await Context.Channel.SendMessageAsync(">>> **Comenzi** : \n Bully (nume) (numar) (mesaj) " +
                 "\n Spune (mesaj) " +
                 "\n Random Kick " +
-                "\n Random Ban " +
-                "\n Server");
+                "\n Random Ban" +
+                "\n Gabor");
         }
 
         [Command("server")]
@@ -115,7 +115,7 @@ namespace discord_bot
         {
             string path = Program.imagePath + "\\gabor";
             string[] images = Directory.GetFiles(path);
-            await Context.Channel.SendMessageAsync(">>> Caut imagine cu gabor");
+            await Context.Channel.SendMessageAsync(">>> Poza cu Gabor " + ec.SendEmote(0));
             await Task.Delay(2000);
             await Context.Channel.SendFileAsync(images[rng.Next(0, images.Length)]);
         }
