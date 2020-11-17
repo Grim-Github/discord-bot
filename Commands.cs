@@ -121,5 +121,19 @@ namespace discord_bot
         }
 
         #endregion
+
+        #region Economy
+        [Command("zilnic")]
+        public async Task DailyPoints()
+        {
+            Economy.DailyMoney(Context.Message.Author);
+        }
+
+        [Command("puncte")]
+        public async Task GetPoints()
+        {
+            await Context.Channel.SendMessageAsync(Economy.GetMoney(Context.Message.Author).ToString());
+        }
+        #endregion
     }
 }
